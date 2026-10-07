@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幼保系四年級甲班 班級網頁 | ECCE 4A</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                        },
+                        pastel: {
+                            pink: '#fce7f3',
+                            blue: '#e0f2fe',
+                            green: '#dcfce7',
+                            yellow: '#fef9c3',
+                            purple: '#f3e8ff'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-amber-50/40 text-slate-700 min-h-screen flex flex-col font-sans">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-orange-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                    <div class="w-10 h-10 bg-orange-400 text-white rounded-full flex items-center justify-center font-bold text-xl shadow-md">
+                        <i class="fa-solid fa-child-reaching"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-lg text-slate-800 tracking-wide block leading-tight">幼保四甲 班級網頁</span>
+                        <span class="text-xs text-orange-500 font-medium">ECCE 4A Portal</span>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-1 lg:space-x-2">
+                    <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-colors text-orange-600 bg-orange-50">
+                        <i class="fa-solid fa-house mr-1.5"></i>班級首頁
+                    </button>
+                    <button onclick="switchTab('students')" id="nav-students" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:text-orange-600 hover:bg-orange-50">
+                        <i class="fa-solid fa-users mr-1.5"></i>同學名冊
+                    </button>
+                    <button onclick="switchTab('schedule')" id="nav-schedule" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:text-orange-600 hover:bg-orange-50">
+                        <i class="fa-solid fa-calendar-days mr-1.5"></i>班級課表
+                    </button>
+                    <button onclick="switchTab('polls')" id="nav-polls" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:text-orange-600 hover:bg-orange-50">
+                        <i class="fa-solid fa-square-poll-vertical mr-1.5"></i>主題投票
+                    </button>
+                    <button onclick="switchTab('gallery')" id="nav-gallery" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:text-orange-600 hover:bg-orange-50">
+                        <i class="fa-solid fa-images mr-1.5"></i>活動花絮
+                    </button>
+                </nav>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="p-2 rounded-md text-slate-600 hover:text-orange-500 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-100 px-4 pt-2 pb-4 space-y-1">
+            <button onclick="switchTab('home')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-orange-600 bg-orange-50">班級首頁</button>
+            <button onclick="switchTab('students')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-slate-50">同學名冊</button>
+            <button onclick="switchTab('schedule')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-slate-50">班級課表</button>
+            <button onclick="switchTab('polls')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-slate-50">主題投票</button>
+            <button onclick="switchTab('gallery')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-slate-50">活動花絮</button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ==================== TAB 1: HOME ==================== -->
+        <section id="tab-home" class="tab-content space-y-8">
+            <!-- Hero Banner -->
+            <div class="relative bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 rounded-3xl p-8 sm:p-12 text-white shadow-lg overflow-hidden">
+                <div class="relative z-10 max-w-2xl">
+                    <span class="inline-block bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-3">Department of Early Childhood Care & Education</span>
+                    <h1 class="text-3xl sm:text-5xl font-extrabold mb-4 leading-tight">幼見幸福，「保」育未來！</h1>
+                    <p class="text-amber-50 text-base sm:text-lg mb-6">歡迎來到幼兒保育系四年級甲班的班級天地。這裡是我們記錄大四實習、畢業專題與共同青春回憶的溫馨角落。</p>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="switchTab('students')" class="bg-white text-orange-600 font-bold px-5 py-2.5 rounded-xl shadow-sm hover:bg-orange-50 transition-all text-sm">認識我們</button>
+                        <button onclick="switchTab('polls')" class="bg-orange-500/80 backdrop-blur-md text-white font-bold px-5 py-2.5 rounded-xl border border-white/30 hover:bg-orange-600/80 transition-all text-sm">參與最新投票</button>
+                    </div>
+                </div>
+                <!-- Decorative Icon Background -->
+                <i class="fa-solid fa-shapes absolute right-4 -bottom-6 text-9xl text-white/10 transform -rotate-12 pointer-events-none hidden sm:block"></i>
+            </div>
+
+            <!-- Dashboard Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Announcements -->
+                <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold text-slate-800 flex items-center">
+                            <i class="fa-solid fa-bullhorn text-orange-500 mr-2.5"></i>班級最新公告
+                        </h2>
+                        <span class="text-xs text-slate-400">更新於今日</span>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-xl bg-orange-50/50 border border-orange-100/60 hover:bg-orange-50 transition-colors">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="bg-orange-100 text-orange-700 text-xs px-2.5 py-0.5 rounded-full font-medium">畢專重要</span>
+                                <span class="text-xs text-slate-400">2026/10/05</span>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-base mb-1">畢業專題成果展三模審查通知</h3>
+                            <p class="text-sm text-slate-600">請各組於本週五 17:00 前將模組展示 PPT 與實體教具送至 A302 教室，準備進行評分。</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 hover:bg-slate-100/80 transition-colors">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="bg-sky-100 text-sky-700 text-xs px-2.5 py-0.5 rounded-full font-medium">班務通知</span>
+                                <span class="text-xs text-slate-400">2026/10/01</span>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-base mb-1">畢業團體照拍攝調查與套服套量</h3>
+                            <p class="text-sm text-slate-600">畢聯會學士服套量時間訂於下週二中午，請尚未填寫尺碼表單的同學儘速完成填寫。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats / Class Info -->
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                        <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center">
+                            <i class="fa-solid fa-circle-info text-amber-500 mr-2.5"></i>班級概況
+                        </h2>
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div class="bg-pastel-pink p-4 rounded-xl">
+                                <p class="text-2xl font-black text-pink-600">38</p>
+                                <p class="text-xs font-medium text-slate-600 mt-1">班級總人數</p>
+                            </div>
+                            <div class="bg-pastel-blue p-4 rounded-xl">
+                                <p class="text-2xl font-black text-sky-600">A302</p>
+                                <p class="text-xs font-medium text-slate-600 mt-1">固定班級教室</p>
+                            </div>
+                            <div class="bg-pastel-green p-4 rounded-xl">
+                                <p class="text-2xl font-black text-emerald-600">8 組</p>
+                                <p class="text-xs font-medium text-slate-600 mt-1">畢業專題組數</p>
+                            </div>
+                            <div class="bg-pastel-purple p-4 rounded-xl">
+                                <p class="text-2xl font-black text-purple-600">100%</p>
+                                <p class="text-xs font-medium text-slate-600 mt-1">實習完成率</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-amber-50 to-orange-100 p-6 rounded-2xl border border-orange-200">
+                        <h3 class="font-bold text-orange-800 text-sm mb-2 flex items-center">
+                            <i class="fa-solid fa-heart text-orange-500 mr-2"></i> 班導師的話
+                        </h3>
+                        <p class="text-xs text-orange-900/80 leading-relaxed italic">
+                            「來到大四最後階段，大家都在實習與專題中快速成長。願你們保持對兒童保育的初衷與熱情，勇敢邁向畢業後的每一步！」
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 2: STUDENTS ==================== -->
+        <section id="tab-students" class="tab-content hidden space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800">同學名冊</h2>
+                    <p class="text-sm text-slate-500">幼保四甲成員介紹與 graduation project 主題</p>
+                </div>
+                <!-- Search & Filter -->
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <div class="relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm"></i>
+                        <input type="text" id="studentSearch" onkeyup="filterStudents()" placeholder="搜尋姓名、職務..." class="pl-9 pr-4 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 w-full sm:w-64">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student Grid Container -->
+            <div id="studentGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Dynamic student cards injected via JS -->
+            </div>
+        </section>
+
+        <!-- ==================== TAB 3: SCHEDULE ==================== -->
+        <section id="tab-schedule" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800">四年級上學期 班級課表</h2>
+                    <p class="text-sm text-slate-500">教室地點：主要於 A302 幼保專業教室</p>
+                </div>
+                <div class="bg-orange-50 text-orange-700 text-xs px-3 py-1.5 rounded-lg border border-orange-200 font-medium">
+                    <i class="fa-solid fa-clock mr-1"></i>每節課 50 分鐘 / 鐘聲為準
+                </div>
+            </div>
+
+            <!-- Schedule Table -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-x-auto">
+                <table class="w-full text-center border-collapse min-w-[640px]">
+                    <thead>
+                        <tr class="bg-slate-50 text-slate-700 border-b border-slate-200 text-sm">
+                            <th class="py-3 px-4 font-semibold w-20">節次</th>
+                            <th class="py-3 px-4 font-semibold">星期一</th>
+                            <th class="py-3 px-4 font-semibold">星期二</th>
+                            <th class="py-3 px-4 font-semibold">星期三</th>
+                            <th class="py-3 px-4 font-semibold">星期四</th>
+                            <th class="py-3 px-4 font-semibold">星期五</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 text-xs sm:text-sm">
+                        <tr>
+                            <td class="py-3 bg-slate-50/50 font-medium text-slate-500">08:10-09:00<br>第 1 節</td>
+                            <td rowspan="2" class="p-2 bg-pink-50/60 border border-pink-100 rounded-lg">
+                                <p class="font-bold text-pink-800">早期療育專題</p>
+                                <p class="text-xs text-slate-500">林教授 | A302</p>
+                            </td>
+                            <td class="p-2 text-slate-400">--</td>
+                            <td rowspan="2" class="p-2 bg-amber-50/60 border border-amber-100 rounded-lg">
+                                <p class="font-bold text-amber-800">幼兒園實習研討</p>
+                                <p class="text-xs text-slate-500">陳主任 | A302</p>
+                            </td>
+                            <td class="p-2 text-slate-400">--</td>
+                            <td rowspan="2" class="p-2 bg-sky-50/60 border border-sky-100 rounded-lg">
+                                <p class="font-bold text-sky-800">幼兒遊戲與教具設計</p>
+                                <p class="text-xs text-slate-500">張老師 | A305</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 bg-slate-50/50 font-medium text-slate-500">09:10-10:00<br>第 2 節</td>
+                            <td class="p-2 text-slate-400">--</td>
+                            <td class="p-2 text-slate-400">--</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 bg-slate-50/50 font-medium text-slate-500">10:10-11:00<br>第 3 節</td>
+                            <td class="p-2 text-slate-400">--</td>
+                            <td rowspan="2" class="p-2 bg-emerald-50/60 border border-emerald-100 rounded-lg">
+                                <p class="font-bold text-emerald-800">畢業專題實務 (一)</p>
+                                <p class="text-xs text-slate-500">指導教授群 | A302</p>
+                            </td>
+                            <td class="p-2 text-slate-400">--</td>
+                            <td rowspan="2" class="p-2 bg-purple-50/60 border border-purple-100 rounded-lg">
+                                <p class="font-bold text-purple-800">嬰幼兒行為觀察</p>
+                                <p class="text-xs text-slate-500">黃教授 | A301</p>
+                            </td>
+                            <td class="p-2 text-slate-400">--</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 bg-slate-50/50 font-medium text-slate-500">11:10-12:00<br>第 4 節</td>
+                            <td class="p-2 text-slate-400">--</td>
+                            <td class="p-2 text-slate-400">--</td>
+                            <td class="p-2 text-slate-400">--</td>
+                        </tr>
+                        <tr class="bg-amber-50/30">
+                            <td class="py-2 text-xs text-slate-400 font-medium" colspan="6">午休時間 12:00 - 13:30</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 bg-slate-50/50 font-medium text-slate-500">13:30-14:20<br>第 5 節</td>
+                            <td rowspan="2" class="p-2 bg-indigo-50/60 border border-indigo-100 rounded-lg">
+                                <p class="font-bold text-indigo-800">幼兒園行政與管理</p>
+                                <p class="text-xs text-slate-500">王院長 | A302</p>
+                            </td>
+                            <td class="p-2 text-slate-400">--</td>
+                            <td class="p-2 text-slate-400">--</td>
+                            <td class="p-2 text-slate-400">--</td>
+                            <td class="p-2 text-slate-400">--</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 bg-slate-50/50 font-medium text-slate-500">14:30-15:20<br>第 6 節</td>
+                            <td class="p-2 text-slate-400">--</td>
+                            <td class="p-2 text-slate-400">--</td>
+                            <td class="p-2 text-slate-400">--</td>
+                            <td class="p-2 text-slate-400">--</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 4: POLLS ==================== -->
+        <section id="tab-polls" class="tab-content hidden space-y-8">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <h2 class="text-2xl font-bold text-slate-800">班級主題投票</h2>
+                <p class="text-sm text-slate-500">請同學們踴躍投票，決定大四重要活動方向！</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Poll 1: Graduation Trip -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="bg-orange-100 text-orange-700 text-xs px-3 py-1 rounded-full font-bold">進行中</span>
+                            <span class="text-xs text-slate-400"><i class="fa-regular fa-clock mr-1"></i>截止日: 10/20</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">1. 畢業旅行地點意願調查</h3>
+                        <p class="text-xs text-slate-500 mb-6">請選擇你最希望作為大四畢業旅行的地點（單選）</p>
+
+                        <!-- Voting Options form -->
+                        <div id="poll1-options" class="space-y-3 mb-6">
+                            <label class="flex items-center p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-orange-50/50 transition-colors">
+                                <input type="radio" name="poll1" value="0" class="text-orange-500 focus:ring-orange-400 mr-3" checked>
+                                <span class="text-sm font-medium text-slate-700">沖繩四天三夜自由行</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-orange-50/50 transition-colors">
+                                <input type="radio" name="poll1" value="1" class="text-orange-500 focus:ring-orange-400 mr-3">
+                                <span class="text-sm font-medium text-slate-700">澎湖跳島巡禮與水上活動</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-orange-50/50 transition-colors">
+                                <input type="radio" name="poll1" value="2" class="text-orange-500 focus:ring-orange-400 mr-3">
+                                <span class="text-sm font-medium text-slate-700">花蓮露營與慢活輕旅行</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button onclick="submitVote(1)" class="w-full bg-orange-500 text-white font-bold py-2.5 rounded-xl shadow-md hover:bg-orange-600 transition-all text-sm mb-4">
+                            投出我的一票
+                        </button>
+                        <!-- Chart Container -->
+                        <div class="mt-4 pt-4 border-t border-slate-100">
+                            <h4 class="text-xs font-bold text-slate-500 mb-2">即時投票結果：</h4>
+                            <div class="h-48">
+                                <canvas id="chartPoll1"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Poll 2: Exhibition Theme -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="bg-orange-100 text-orange-700 text-xs px-3 py-1 rounded-full font-bold">進行中</span>
+                            <span class="text-xs text-slate-400"><i class="fa-regular fa-clock mr-1"></i>截止日: 10/15</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">2. 畢專成果展佈置主題風格</h3>
+                        <p class="text-xs text-slate-500 mb-6">畢業專題展覽主視覺與展場風格設定（單選）</p>
+
+                        <!-- Voting Options form -->
+                        <div id="poll2-options" class="space-y-3 mb-6">
+                            <label class="flex items-center p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-orange-50/50 transition-colors">
+                                <input type="radio" name="poll2" value="0" class="text-orange-500 focus:ring-orange-400 mr-3" checked>
+                                <span class="text-sm font-medium text-slate-700">童話繪本風（溫暖手繪感）</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-orange-50/50 transition-colors">
+                                <input type="radio" name="poll2" value="1" class="text-orange-500 focus:ring-orange-400 mr-3">
+                                <span class="text-sm font-medium text-slate-700">自然森林風（原木與綠植）</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-orange-50/50 transition-colors">
+                                <input type="radio" name="poll2" value="2" class="text-orange-500 focus:ring-orange-400 mr-3">
+                                <span class="text-sm font-medium text-slate-700">現代極簡風（繽紛幾何圖樣）</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button onclick="submitVote(2)" class="w-full bg-orange-500 text-white font-bold py-2.5 rounded-xl shadow-md hover:bg-orange-600 transition-all text-sm mb-4">
+                            投出我的一票
+                        </button>
+                        <!-- Chart Container -->
+                        <div class="mt-4 pt-4 border-t border-slate-100">
+                            <h4 class="text-xs font-bold text-slate-500 mb-2">即時投票結果：</h4>
+                            <div class="h-48">
+                                <canvas id="chartPoll2"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 5: GALLERY ==================== -->
+        <section id="tab-gallery" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800">系上活動花絮</h2>
+                    <p class="text-sm text-slate-500">記錄我們在幼保系的精彩點滴與成長時刻</p>
+                </div>
+                <!-- Category Buttons -->
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterGallery('all')" class="gallery-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-orange-500 text-white">全部</button>
+                    <button onclick="filterGallery('internship')" class="gallery-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200">實習紀錄</button>
+                    <button onclick="filterGallery('drama')" class="gallery-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200">兒童劇團</button>
+                    <button onclick="filterGallery('events')" class="gallery-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200">班級活動</button>
+                </div>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Gallery Item 1 -->
+                <div class="gallery-item internship bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 group">
+                    <div class="relative overflow-hidden h-48 bg-slate-200">
+                        <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=600&q=80" alt="幼兒園實習" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-orange-600 text-xs font-bold px-2.5 py-1 rounded-md">實習紀錄</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-slate-800 mb-1">幼兒園大班入園實習成果試教</h3>
+                        <p class="text-xs text-slate-500 mb-2"><i class="fa-regular fa-calendar mr-1"></i>2026/05/18</p>
+                        <p class="text-xs text-slate-600">同學設計繪本與肢體伸展活動，帶領小朋友一起進入童話世界。</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 2 -->
+                <div class="gallery-item drama bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 group">
+                    <div class="relative overflow-hidden h-48 bg-slate-200">
+                        <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80" alt="兒童劇表演" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-purple-600 text-xs font-bold px-2.5 py-1 rounded-md">兒童劇團</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-slate-800 mb-1">兒童劇公演《魔法森林歷險記》</h3>
+                        <p class="text-xs text-slate-500 mb-2"><i class="fa-regular fa-calendar mr-1"></i>2026/03/22</p>
+                        <p class="text-xs text-slate-600">從舞台道具手工製作、服裝設計到音樂編排，全班齊心合力的熱血展演。</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 3 -->
+                <div class="gallery-item events bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 group">
+                    <div class="relative overflow-hidden h-48 bg-slate-200">
+                        <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=600&q=80" alt="幼保之夜" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-emerald-600 text-xs font-bold px-2.5 py-1 rounded-md">班級活動</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-slate-800 mb-1">大三升大四「幼保之夜」聚餐</h3>
+                        <p class="text-xs text-slate-500 mb-2"><i class="fa-regular fa-calendar mr-1"></i>2026/06/10</p>
+                        <p class="text-xs text-slate-600">畢業專題開展前夕的班級聚餐，感謝老師們的用心指導與陪伴。</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 4 -->
+                <div class="gallery-item internship bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 group">
+                    <div class="relative overflow-hidden h-48 bg-slate-200">
+                        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=600&q=80" alt="教具展" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-orange-600 text-xs font-bold px-2.5 py-1 rounded-md">實習紀錄</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-slate-800 mb-1">幼兒創意教具製作展</h3>
+                        <p class="text-xs text-slate-500 mb-2"><i class="fa-regular fa-calendar mr-1"></i>2025/12/15</p>
+                        <p class="text-xs text-slate-600">展示結合感官刺激與環保材質的幼兒教具設計作品。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 space-y-2">
+            <p>幼兒保育系 四年級甲班 (幼保四甲) 版權所有 © 2026 ECCE 4A Class Portal</p>
+            <p>推薦使用 Chrome, Safari, Edge 瀏覽器以獲得最佳瀏覽體驗</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Sample Student Data
+        const students = [
+            { id: 1, name: "林怡君", role: "班長", topic: "幼兒情緒調節繪本研發", quote: "用愛與耐性陪伴孩子成長的每一步。", avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=YiJun" },
+            { id: 2, name: "陳冠宇", role: "副班長", topic: "感官統合教具在早療的應用", quote: "莫忘初衷，讓每個孩子發光。", avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=GuanYu" },
+            { id: 3, name: "張美玲", role: "學藝幹部", topic: "幼兒園環境佈置與美感教育", quote: "美感教育從生活小事開始。", avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=MeiLing" },
+            { id: 4, name: "黃柏翰", role: "康樂幹部", topic: "幼兒肢體律動遊戲設計", quote: "運動與遊戲是最好的學習手段。", avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=BoHan" },
+            { id: 5, name: "許雅婷", role: "總務幹部", topic: "親子館互動區域空間規劃", quote: "細心與責任是幼保人的核心精神。", avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=YaTing" },
+            { id: 6, name: "廖家豪", role: "網管幹部", topic: "幼兒數位輔助教學 app 探索", quote: "科技為輔，愛心為本。", avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=JiaHao" },
+            { id: 7, name: "蔡佩珊", role: "班級隊員", topic: "幼兒餐點營養與食育推廣", quote: "吃得健康，長得強壯！", avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=PeiShan" },
+            { id: 8, name: "鄭宇軒", role: "班級隊員", topic: "自然探索在幼兒課程中的融入", quote: "帶領孩子走入大自然探險。", avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=YuXuan" }
+        ];
+
+        // Poll Data State
+        const pollData = {
+            1: { labels: ['沖繩自由行', '澎湖跳島', '花蓮露營'], votes: [18, 12, 5] },
+            2: { labels: ['童話繪本風', '自然森林風', '現代極簡風'], votes: [15, 14, 6] }
+        };
+
+        let chart1Instance = null;
+        let chart2Instance = null;
+
+        // Initialize Page
+        document.addEventListener("DOMContentLoaded", () => {
+            renderStudents(students);
+            initCharts();
+        });
+
+        // Tab Switcher
+        function switchTab(tabId) {
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            // Show selected content
+            const activeTab = document.getElementById(`tab-${tabId}`);
+            if (activeTab) activeTab.classList.remove('hidden');
+
+            // Reset desktop navigation styles
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-orange-600', 'bg-orange-50');
+                btn.classList.add('text-slate-600');
+            });
+
+            // Set active navigation style
+            const activeNav = document.getElementById(`nav-${tabId}`);
+            if (activeNav) {
+                activeNav.classList.add('text-orange-600', 'bg-orange-50');
+                activeNav.classList.remove('text-slate-600');
+            }
+
+            // Close mobile menu if open
+            document.getElementById('mobile-menu').classList.add('hidden');
+
+            // Resize charts on view tab
+            if (tabId === 'polls') {
+                setTimeout(() => {
+                    if (chart1Instance) chart1Instance.resize();
+                    if (chart2Instance) chart2Instance.resize();
+                }, 100);
+            }
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Render Student Cards
+        function renderStudents(data) {
+            const container = document.getElementById('studentGrid');
+            container.innerHTML = data.map(s => `
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex flex-col items-center text-center hover:shadow-md transition-shadow">
+                    <div class="w-20 h-20 bg-amber-100/70 rounded-full flex items-center justify-center p-1 mb-3 border-2 border-orange-200">
+                        <img src="${s.avatar}" alt="${s.name}" class="w-full h-full rounded-full">
+                    </div>
+                    <span class="bg-orange-100 text-orange-700 text-xs px-2.5 py-0.5 rounded-full font-bold mb-2">${s.role}</span>
+                    <h3 class="font-bold text-slate-800 text-lg mb-1">${s.name}</h3>
+                    <p class="text-xs text-orange-600 font-medium mb-3">專題：${s.topic}</p>
+                    <p class="text-xs text-slate-500 italic bg-slate-50 p-2.5 rounded-xl w-full">"${s.quote}"</p>
+                </div>
+            `).join('');
+        }
+
+        // Filter Students
+        function filterStudents() {
+            const query = document.getElementById('studentSearch').value.toLowerCase();
+            const filtered = students.filter(s => 
+                s.name.toLowerCase().includes(query) || 
+                s.role.toLowerCase().includes(query) ||
+                s.topic.toLowerCase().includes(query)
+            );
+            renderStudents(filtered);
+        }
+
+        // Chart.js Setup
+        function initCharts() {
+            // Poll 1 Chart
+            const ctx1 = document.getElementById('chartPoll1').getContext('2d');
+            chart1Instance = new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: pollData[1].labels,
+                    datasets: [{
+                        label: '得票數',
+                        data: pollData[1].votes,
+                        backgroundColor: ['#f97316', '#fb923c', '#fdba74'],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { stepSize: 5 } } }
+                }
+            });
+
+            // Poll 2 Chart
+            const ctx2 = document.getElementById('chartPoll2').getContext('2d');
+            chart2Instance = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: pollData[2].labels,
+                    datasets: [{
+                        label: '得票數',
+                        data: pollData[2].votes,
+                        backgroundColor: ['#a855f7', '#c084fc', '#e9d5ff'],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { stepSize: 5 } } }
+                }
+            });
+        }
+
+        // Handle Voting
+        function submitVote(pollId) {
+            const selected = document.querySelector(`input[name="poll${pollId}"]:checked`);
+            if (!selected) return;
+
+            const optionIndex = parseInt(selected.value);
+            pollData[pollId].votes[optionIndex] += 1;
+
+            if (pollId === 1 && chart1Instance) {
+                chart1Instance.data.datasets[0].data = pollData[1].votes;
+                chart1Instance.update();
+            } else if (pollId === 2 && chart2Instance) {
+                chart2Instance.data.datasets[0].data = pollData[2].votes;
+                chart2Instance.update();
+            }
+
+            alert('感謝您的投票！投票結果已即時更新。');
+        }
+
+        // Gallery Filter
+        function filterGallery(category) {
+            const items = document.querySelectorAll('.gallery-item');
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+
+            // Update Active Filter Button
+            document.querySelectorAll('.gallery-filter-btn').forEach(btn => {
+                btn.classList.remove('bg-orange-500', 'text-white');
+                btn.classList.add('bg-slate-100', 'text-slate-600');
+            });
+            event.target.classList.remove('bg-slate-100', 'text-slate-600');
+            event.target.classList.add('bg-orange-500', 'text-white');
+        }
+    </script>
+</body>
+</html>
